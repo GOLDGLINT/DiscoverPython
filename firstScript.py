@@ -10,9 +10,8 @@ class User:
 
 antoine = User("gold", "glint")
 nico = User("nico", "pass")
-adolf = User("dodolf", "ilikegerman")
 
-users = [antoine, nico, adolf]
+users = [antoine, nico]
 
 loginInput = input("Enter your login :\n")
 
