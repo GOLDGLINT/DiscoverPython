@@ -10,26 +10,18 @@ class ConnexionController:
         self.loginStatus = False
         self.passwordStatus = False
 
-    def verifyLogin(self):
-        loginInput = connexionView.getLoginInput()
-        while self.loginStatus is False:
-            for user in self.users:
-                if user.login == loginInput:
-                    self.loginStatus = True
-                    self.userConnected = user
-            if self.loginStatus is False:
-                connexionView.printWrongLogin()
-                loginInput = connexionView.getLoginInput()
-
-    def verifyPassword(self):
-        passwordInput = connexionView.getPasswordInput()
-        while self.passwordStatus is False:
-            if self.userConnected.password == passwordInput:
-                self.passwordStatus = True
-            if self.passwordStatus is False:
-                connexionView.printWrongPassword()
-                passwordInput = connexionView.getPasswordInput()
+    def isUser(self, loginInput, passwordInput):
+        for user in self.users:
+            if user.login == loginInput:
+                if user.password == passwordInput:
+                    return True
+        return False
 
     def login(self):
-        self.verifyLogin()
-        self.verifyPassword()
+        loginInput = connexionView.getLoginInput()
+        passwordInput = connexionView.getPasswordInput()
+        if self.isUser(loginInput, passwordInput):
+            connexionView.printUserConnected()
+        else:
+            connexionView.printWrongLoginOrPassword()
+            self.login()
