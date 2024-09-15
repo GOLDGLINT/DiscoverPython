@@ -1,4 +1,5 @@
 from views import connexionView
+from controllers.scpController import ScpController
 
 class ConnexionController:
     def isUser(self, loginInput: str, passwordInput: str):
@@ -13,6 +14,7 @@ class ConnexionController:
         passwordInput = connexionView.getPasswordInput()
         if ConnexionController.isUser(self, loginInput, passwordInput):
             connexionView.printUserConnected()
+            ScpController.listSCPs(self)
         else:
             connexionView.printWrongLoginOrPassword()
             ConnexionController.login()
