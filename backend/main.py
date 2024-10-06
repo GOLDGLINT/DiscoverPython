@@ -1,7 +1,5 @@
-# backend/main.py
-
 from fastapi import FastAPI
-from controllers.connexionController import ConnexionController
+from controllers import connexionController
 
 app = FastAPI()
 
@@ -11,4 +9,4 @@ def read_root():
 
 @app.get("/login")
 def login(userName: str, password: str):
-    return ConnexionController.login(userName, password)
+    return connexionController.login(userName, password)
