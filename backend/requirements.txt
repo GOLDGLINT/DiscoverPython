@@ -1,2 +1,6 @@
+aerich
 fastapi
 uvicorn
+aiomysql
+tortoise-orm[asyncmy]
+cryptography

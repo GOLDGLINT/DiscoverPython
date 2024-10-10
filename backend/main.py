@@ -1,12 +1,23 @@
 from fastapi import FastAPI
-from controllers import connexionController
+from tortoise.contrib.fastapi import register_tortoise
+from config import init_db
+from models import User
 
 app = FastAPI()
 
-@app.get("/")
-def read_root():
-    return {"message": "Bienvenue sur l'API FastAPI!"}
+@app.on_event("startup")
+async def startup_event():
+    await init_db()
 
-@app.get("/login")
-def login(userName: str, password: str):
-    return connexionController.login(userName, password)
+register_tortoise(
+    app,
+    db_url="mysql://myuser:mypassword@db/mydatabase",
+    modules={"models": ["models.User"]},
+    generate_schemas=True,
+    add_exception_handlers=True,
+)
+
+@app.put("/users/")
+async def create_user(email: str, password: str):
+    user = await User.create(email=email, hashed_password=password)
+    return user
